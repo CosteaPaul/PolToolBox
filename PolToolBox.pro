@@ -5,7 +5,10 @@ TARGET = PolToolBox
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    session.cpp
+    session.cpp \
+    polsettings.cpp
 HEADERS += mainwindow.h \
-    session.h
-FORMS += mainwindow.ui
+    session.h \
+    polsettings.h
+FORMS += mainwindow.ui \
+    polsettings.ui
