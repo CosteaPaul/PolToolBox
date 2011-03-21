@@ -6,9 +6,11 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     session.cpp \
-    polsettings.cpp
+    polsettings.cpp \
+    polcopy.cpp
 HEADERS += mainwindow.h \
     session.h \
-    polsettings.h
+    polsettings.h \
+    polcopy.h
 FORMS += mainwindow.ui \
     polsettings.ui

@@ -51,3 +51,43 @@ bool Session::connect(QString host)
 
     return isConnected;
 }
+
+QString Session::runCommand(const QString& cmd, QStringList args)
+{
+    if (!m_pSsh)
+        return "";
+    QString fullCommand = cmd;
+    for (int i=0 ; i<args.count(); ++i) {
+        fullCommand += " "+args[i];
+    }
+    fullCommand += "\n";
+    //Run the command
+    m_pSsh->write(fullCommand.toLocal8Bit());
+    if (!m_pSsh->waitForReadyRead()) {
+        //Something went wrong
+        return "";
+    } else {
+        QString res = m_pSsh->readAllStandardOutput();
+        return res;
+    }
+}
+
+QStringList Session::getAvailableTools(QString projID)
+{
+    if (!m_pSsh) {
+        return QStringList();
+    }
+    //TODO: path should be independent of UPPMAX file system.
+    QString path = "/bubo/proj/"+projID;
+    runCommand("cd",QStringList()<<path);
+    QString less = runCommand("ls -1");
+    QStringList folders = less.split('\n');
+    if (folders.indexOf("toolbox") != -1) {
+        //Populate tools list.
+        runCommand("cd",QStringList()<<"toolbox");
+        QString less = runCommand("ls -1");
+        QStringList tools = less.split('\n');
+        return tools;
+    } else
+        return QStringList();
+}

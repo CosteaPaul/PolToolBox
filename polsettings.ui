@@ -45,6 +45,16 @@
      <item>
       <widget class="QLineEdit" name="Edit_LabelLogin"/>
      </item>
+     <item>
+      <widget class="QLabel" name="labelProjectID">
+       <property name="text">
+        <string>Project ID:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="Edit_ProjID"/>
+     </item>
     </layout>
    </item>
    <item>
