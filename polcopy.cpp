@@ -32,6 +32,8 @@ bool PolCopy::copyToServer(QString localPath)
     if (exit != 0) {
         //Copy did not succeed.
         QString aa = scp->readAllStandardError();
+        delete scp;
+        return false;
     }
     delete scp;
     return true;
@@ -40,6 +42,34 @@ bool PolCopy::copyToServer(QString localPath)
 
 bool PolCopy::copyFromServer(QString fileName, QString localPath)
 {
-    //TODO: implement
-    return false;
+
+    //Get server and project ID
+    QSettings settings;
+    QString host = settings.value("connect","").toString();
+    QString projId = settings.value("projID","").toString();
+
+    //TODO: destination should not be UPPMAX specific
+    QString source = host+":/bubo/proj/"+projId+"/toolbox/"+fileName;
+
+    QProcess* scp = new QProcess();
+    QString app = "scp";
+    scp->start(app,QStringList() << source << localPath);
+
+    if (!scp->waitForStarted()) {
+        scp->close();
+        delete scp;
+        return false;
+    }
+    //Wait for copy to be done!
+    scp->waitForFinished();
+    //Get exit code
+    int exit = scp->exitCode();
+    if (exit != 0) {
+        //Copy did not succeed.
+        QString aa = scp->readAllStandardError();
+        delete scp;
+        return false;
+    }
+    delete scp;
+    return true;
 }

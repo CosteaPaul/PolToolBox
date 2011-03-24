@@ -12,6 +12,7 @@ PolSettings::PolSettings(QWidget *parent) :
     QSettings settings;
     ui->Edit_LabelLogin->setText(settings.value("connect","").toString());
     ui->Edit_ProjID->setText(settings.value("projID","").toString());
+    ui->Edit_Local->setText(settings.value("local","").toString());
 }
 
 PolSettings::~PolSettings()
@@ -39,4 +40,5 @@ void PolSettings::on_PolSettings_accepted()
     QSettings settings;
     settings.setValue("connect",ui->Edit_LabelLogin->text());
     settings.setValue("projID",ui->Edit_ProjID->text());
+    settings.setValue("local",ui->Edit_Local->text());
 }

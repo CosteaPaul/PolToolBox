@@ -15,7 +15,7 @@ public:
     static bool copyToServer(QString localPath);
 
     /**
-      * @brief Copy specified file from rever to a local path.
+      * @brief Copy specified file from server to a local path.
       * @arg fileName -     Name of file to copy from server.
       * @arg localPath -    Local path to copy to.
       */

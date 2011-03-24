@@ -29,18 +29,24 @@ void MainWindow::changeEvent(QEvent *e)
     }
 }
 
+#include "QTime"
 #include "polcopy.h"
+#include "qdir.h"
 
 void MainWindow::on_pushButton_clicked()
 {
     this->setCursor(Qt::WaitCursor);
-    //Test copy
-    PolCopy::copyToServer("/home/paul/Work/circos/probes11.txt");
+    QSettings settings;
+    QString locPath = settings.value("local","").toString();
+    if (locPath.isEmpty()) {
+        QMessageBox::information(this,"Path issue","Please configure local path");
+        return;
+    }
+    //Copy config file
+    PolCopy::copyFromServer("config.xml",locPath);
     this->setCursor(Qt::ArrowCursor);
     return;
-
     Session* uppmax = Session::getInstance();
-    QSettings settings;
     QString host = settings.value("connect","").toString();
     uppmax->connect(host);
     //Check is connected
@@ -51,9 +57,9 @@ void MainWindow::on_pushButton_clicked()
         QMessageBox::information(this,"Connection Problem","Unable to connect to the specified host. \nMake sure your settings are ok");
         return;
     }
-
     QStringList tools = uppmax->getAvailableTools(settings.value("projID","").toString());
     ui->listWidget_available->addItems(tools);
+
 }
 
 void MainWindow::on_actionSettings_triggered()
