@@ -30,7 +30,11 @@
      </widget>
     </item>
     <item>
-     <widget class="QListWidget" name="listWidget_available"/>
+     <widget class="QListWidget" name="listWidget_available">
+      <property name="editTriggers">
+       <set>QAbstractItemView::NoEditTriggers</set>
+      </property>
+     </widget>
     </item>
     <item>
      <spacer name="verticalSpacer">
@@ -53,7 +57,7 @@
      <x>0</x>
      <y>0</y>
      <width>381</width>
-     <height>23</height>
+     <height>25</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuTools">

@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QModelIndex>
 
 namespace Ui {
     class MainWindow;
@@ -20,6 +21,7 @@ private:
     Ui::MainWindow *ui;
 
 private slots:
+    void on_listWidget_available_doubleClicked(QModelIndex index);
     void on_actionSettings_triggered();
     void on_pushButton_clicked();
 };

@@ -7,10 +7,12 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     session.cpp \
     polsettings.cpp \
-    polcopy.cpp
+    polcopy.cpp \
+    polxmlparser.cpp
 HEADERS += mainwindow.h \
     session.h \
     polsettings.h \
-    polcopy.h
+    polcopy.h \
+    polxmlparser.h
 FORMS += mainwindow.ui \
     polsettings.ui

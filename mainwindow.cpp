@@ -4,6 +4,9 @@
 #include "qmessagebox.h"
 #include "polsettings.h"
 #include "qsettings.h"
+#include "polcopy.h"
+#include "polxmlparser.h"
+#include "qdir.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -29,12 +32,9 @@ void MainWindow::changeEvent(QEvent *e)
     }
 }
 
-#include "QTime"
-#include "polcopy.h"
-#include "qdir.h"
-
 void MainWindow::on_pushButton_clicked()
 {
+    //Get the config.xml file
     this->setCursor(Qt::WaitCursor);
     QSettings settings;
     QString locPath = settings.value("local","").toString();
@@ -43,27 +43,31 @@ void MainWindow::on_pushButton_clicked()
         return;
     }
     //Copy config file
-    PolCopy::copyFromServer("config.xml",locPath);
-    this->setCursor(Qt::ArrowCursor);
-    return;
-    Session* uppmax = Session::getInstance();
-    QString host = settings.value("connect","").toString();
-    uppmax->connect(host);
-    //Check is connected
-    if (uppmax->getConnected())
-        //Hide button!
-        ui->pushButton->setVisible(false);
-    else {
-        QMessageBox::information(this,"Connection Problem","Unable to connect to the specified host. \nMake sure your settings are ok");
-        return;
+    if (!PolCopy::copyFromServer("config.xml",locPath)) {
+        //Check if there is a config file already available.
+        QDir local(locPath);
+        if (local.exists("config.xml")) {
+            QMessageBox::warning(this,"Warning","Unable to retrieve config.xml from server. Session will use an older local copy if it");
+        }else {
+            QMessageBox::information(this,"Error","Tools config file was not found. Make sure you have set all paths correctly or contact your ToolBox administrator");
+        }
     }
-    QStringList tools = uppmax->getAvailableTools(settings.value("projID","").toString());
-    ui->listWidget_available->addItems(tools);
+    this->setCursor(Qt::ArrowCursor);
 
+    //Parse config file
+    PolXMLParser* myParser = new PolXMLParser(locPath+"config.xml");
+    QStringList all = myParser->getToolsList();
+    ui->listWidget_available->addItems(all);
+    delete myParser;
 }
 
 void MainWindow::on_actionSettings_triggered()
 {
     PolSettings* sett = new PolSettings(this);
     sett->exec();
+}
+
+void MainWindow::on_listWidget_available_doubleClicked(QModelIndex index)
+{
+    QString appName = ui->listWidget_available->selectedItems().at(0)->text();
 }
