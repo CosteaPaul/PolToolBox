@@ -13,7 +13,14 @@ public:
       * @returns StringList of all available tools
       */
     QStringList getToolsList();
+
+    QString getAuthor(QString appName);
+    QString getDescription(QString appName);
+    QDomNodeList getOptions(QString appName);
+
 private:
+    QDomElement getNodeOfAppName(QString appName);
+
     QDomDocument doc;
 };
 

@@ -8,11 +8,15 @@ SOURCES += main.cpp \
     session.cpp \
     polsettings.cpp \
     polcopy.cpp \
-    polxmlparser.cpp
+    polxmlparser.cpp \
+    polruntool.cpp
 HEADERS += mainwindow.h \
     session.h \
     polsettings.h \
     polcopy.h \
-    polxmlparser.h
+    polxmlparser.h \
+    polruntool.h
 FORMS += mainwindow.ui \
-    polsettings.ui
+    polsettings.ui \
+    polruntool.ui
+QT += xml

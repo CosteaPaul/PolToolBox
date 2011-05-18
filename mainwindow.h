@@ -8,6 +8,8 @@ namespace Ui {
     class MainWindow;
 }
 
+class PolRunTool;
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
@@ -19,6 +21,7 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    PolRunTool *mRunner;
 
 private slots:
     void on_listWidget_available_doubleClicked(QModelIndex index);

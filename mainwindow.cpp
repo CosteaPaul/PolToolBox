@@ -7,10 +7,12 @@
 #include "polcopy.h"
 #include "polxmlparser.h"
 #include "qdir.h"
+#include "polruntool.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    mRunner(NULL)
 {
     ui->setupUi(this);
 }
@@ -70,4 +72,13 @@ void MainWindow::on_actionSettings_triggered()
 void MainWindow::on_listWidget_available_doubleClicked(QModelIndex index)
 {
     QString appName = ui->listWidget_available->selectedItems().at(0)->text();
+    if (mRunner != NULL) {
+        //Remove previous run options
+        ui->verticalLayout->removeWidget(mRunner);
+        delete mRunner;
+        mRunner = NULL;
+    }
+    mRunner = new PolRunTool(this,appName);
+    mRunner->setObjectName(QString::fromUtf8("runOptions"));
+    ui->verticalLayout->addWidget(mRunner,1);
 }
