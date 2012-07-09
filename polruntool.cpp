@@ -27,14 +27,48 @@ PolRunTool::PolRunTool(QWidget *parent, QString appName) :
         //Create UI of all options
         for (int i=0; i<optionList.size(); ++i)
             buildFromXMLOption(optionList.at(i).toElement());
-
     } else {
         //Hide options tab
         ui->page_Options->setShown(false);
     }
+
+    //Build parameters tab
+    QDomNodeList paramList = m_pParser->getParameters(appName);
+    if (paramList.size() > 0) {
+        //Create UI of all parameters
+        for (int i=0; i<optionList.size(); ++i)
+            buildFromXMLParam(optionList.at(i).toElement());
+    } else { //Hide parameters tab
+        ui->page_Parameters->setShown(false);
+    }
+
     setCurrentIndex(0);
 }
 
+/**
+  * @brief: Build UI element for required parameter
+  * @returns: True if success, false otherwise
+  */
+bool PolRunTool::buildFromXMLParam(QDomElement param)
+{
+    QString name = param.toElement().text();
+    //Create line edit box
+    QLabel* label = new QLabel(name,this);
+    QLineEdit* edit = new QLineEdit(this);
+    QHBoxLayout* hLayout = new QHBoxLayout(this);
+    QSpacerItem* s = new QSpacerItem(20,10,QSizePolicy::Minimum, QSizePolicy::Expanding);
+    hLayout->addWidget(label);
+    hLayout->addWidget(edit);
+    hLayout->addItem(s);
+    ui->layout_Parameters->addLayout(hLayout);
+    return true;
+}
+
+/**
+  * @brief: Build UI element for option. Will created a
+  * different type of control based on the 'type' of option.
+  * @returns: True if success, false otherwise
+  */
 bool PolRunTool::buildFromXMLOption(QDomElement node)
 {
     //Get type
@@ -76,16 +110,19 @@ bool PolRunTool::buildFromXMLOption(QDomElement node)
         QLabel* label = new QLabel(descr,this);
         QLineEdit* edit = new QLineEdit(this);
         edit->setText(def);
+        //Create horizontal layout for the lable + text box
         QHBoxLayout* hLayout = new QHBoxLayout(this);
         QSpacerItem* s = new QSpacerItem(20,10,QSizePolicy::Minimum, QSizePolicy::Expanding);
         hLayout->addWidget(label);
         hLayout->addWidget(edit);
         hLayout->addItem(s);
+        //Add horizontal layout containing the lable and text box to the overall vertical layout of the widget
         ui->layout_Options->addLayout(hLayout);
     }
 
     QSpacerItem* spacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     ui->layout_Options->addItem(spacer);
+    return true;
 }
 
 PolRunTool::~PolRunTool()

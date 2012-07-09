@@ -20,10 +20,10 @@
    <enum>QFrame::NoFrame</enum>
   </property>
   <property name="currentIndex">
-   <number>1</number>
+   <number>2</number>
   </property>
   <property name="tabSpacing">
-   <number>6</number>
+   <number>1</number>
   </property>
   <widget class="QWidget" name="page_Desciption">
    <property name="geometry">
@@ -31,7 +31,7 @@
      <x>0</x>
      <y>0</y>
      <width>537</width>
-     <height>462</height>
+     <height>431</height>
     </rect>
    </property>
    <attribute name="label">
@@ -93,7 +93,7 @@
      <x>0</x>
      <y>0</y>
      <width>537</width>
-     <height>462</height>
+     <height>431</height>
     </rect>
    </property>
    <attribute name="label">
@@ -119,6 +119,23 @@
        </size>
       </property>
      </spacer>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="page_Parameters">
+   <attribute name="label">
+    <string>Parameters</string>
+   </attribute>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QVBoxLayout" name="layout_Parameters">
+      <property name="spacing">
+       <number>4</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMaximumSize</enum>
+      </property>
+     </layout>
     </item>
    </layout>
   </widget>

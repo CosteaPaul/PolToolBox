@@ -17,6 +17,7 @@ public:
     QString getAuthor(QString appName);
     QString getDescription(QString appName);
     QDomNodeList getOptions(QString appName);
+    QDomNodeList getParameters(QString appName);
 
 private:
     QDomElement getNodeOfAppName(QString appName);

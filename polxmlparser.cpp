@@ -55,6 +55,16 @@ QString PolXMLParser::getAuthor(QString appName)
     return l.at(0).toElement().text();
 }
 
+QDomNodeList PolXMLParser::getParameters(QString appName)
+{
+    QDomElement d = getNodeOfAppName(appName);
+    if (d.isNull())
+        return QDomNodeList();
+
+    QDomNodeList l = d.elementsByTagName("param");
+    return l;
+}
+
 QDomNodeList PolXMLParser::getOptions(QString appName)
 {
     QDomElement d = getNodeOfAppName(appName);

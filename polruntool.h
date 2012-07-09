@@ -19,6 +19,7 @@ public:
 
 private:
     bool buildFromXMLOption(QDomElement opt);
+    bool buildFromXMLParam(QDomElement param);
 
     Ui::PolRunTool *ui;
     PolXMLParser *m_pParser;
